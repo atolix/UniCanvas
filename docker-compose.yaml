@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  app:
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    ports:
+      - '4000:4000'
+    tty: true
+    environment:
+      - MIX_ENV=dev
+      - PORT=4000
+    volumes:
+      - .:/app
+    working_dir: /app/src
+    depends_on:
+      - db
+    command: "elixir --sname uni_canvas@app --cookie uni_canvas -S mix phx.server"
+  db:
+    image: postgres
+    volumes:
+      - .data/postgres:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+
