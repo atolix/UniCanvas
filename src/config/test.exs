@@ -17,7 +17,7 @@ config :uni_canvas, UniCanvas.Repo,
 # you can enable the server option below.
 config :uni_canvas, UniCanvasWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "HXbrO0mXFwZzt/3hesJr8GJoJUm6tVpfUv5ey99+CmRjAmzLvjJWwXXwvnSoAp/c",
+  secret_key_base: "7+wZn0ELiiaeAcEk+hMLHPUQIoYKSA9VgL6Snj0BB9E/voRD4wg8Vc8o433GDZaN",
   server: false
 
 # In test we don't send emails.

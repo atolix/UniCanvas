@@ -23,7 +23,7 @@ config :uni_canvas, UniCanvasWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "hDHptGhqRZj4lLELAiAxuk9LfC10tdkKCb7upbfWupLy/n2iTk5rY1JxJegluIpB",
+  secret_key_base: "OMjSI1Dkd2L7MHvGdE1esbtZDhsmVGbzUu3NR1H7rMpU8OgfuBsWke/z8oOLobI7",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}

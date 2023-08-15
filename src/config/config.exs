@@ -18,7 +18,7 @@ config :uni_canvas, UniCanvasWeb.Endpoint,
     layout: false
   ],
   pubsub_server: UniCanvas.PubSub,
-  live_view: [signing_salt: "NBnuG+Bq"]
+  live_view: [signing_salt: "huvzTcrE"]
 
 # Configures the mailer
 #

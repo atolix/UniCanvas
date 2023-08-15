@@ -7,7 +7,7 @@ defmodule UniCanvasWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_uni_canvas_key",
-    signing_salt: "aiqi77Ic",
+    signing_salt: "JJIaQzQV",
     same_site: "Lax"
   ]
 
