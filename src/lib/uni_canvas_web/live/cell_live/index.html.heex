@@ -1,0 +1,43 @@
+<.header>
+  Listing Cells
+  <:actions>
+    <.link patch={~p"/cells/new"}>
+      <.button>New Cell</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="cells"
+  rows={@streams.cells}
+  row_click={fn {_id, cell} -> JS.navigate(~p"/cells/#{cell}") end}
+>
+  <:col :let={{_id, cell}} label="Row"><%= cell.row %></:col>
+  <:col :let={{_id, cell}} label="Col"><%= cell.col %></:col>
+  <:col :let={{_id, cell}} label="Color"><%= cell.color %></:col>
+  <:action :let={{_id, cell}}>
+    <div class="sr-only">
+      <.link navigate={~p"/cells/#{cell}"}>Show</.link>
+    </div>
+    <.link patch={~p"/cells/#{cell}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, cell}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: cell.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="cell-modal" show on_cancel={JS.patch(~p"/cells")}>
+  <.live_component
+    module={UniCanvasWeb.CellLive.FormComponent}
+    id={@cell.id || :new}
+    title={@page_title}
+    action={@live_action}
+    cell={@cell}
+    patch={~p"/cells"}
+  />
+</.modal>
