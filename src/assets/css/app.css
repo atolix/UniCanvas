@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   display: grid;
-  grid-template-columns: repeat(256, 20px);
+  grid-template-columns: repeat(64, 20px);
 }
 
 .cell {
