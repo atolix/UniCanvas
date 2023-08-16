@@ -1,9 +1,11 @@
 defmodule UniCanvasWeb.GridLive do
   use UniCanvasWeb, :live_view
-
+  import Ecto.Query
+ 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, cells: UniCanvas.Repo.all(UniCanvas.Cell))}
+    query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
+    {:ok, assign(socket, cells: UniCanvas.Repo.all(query))}
   end
 
   @impl true
@@ -15,8 +17,7 @@ defmodule UniCanvasWeb.GridLive do
           class="cell"
           style="background-color: <%= cell.color %>"
           phx-click="change_color"
-          phx-value-row="<%= cell.row %>"
-          phx-value-col="<%= cell.col %>"
+          phx-value-id="<%= cell.id %>"
         ></div>
       <% end %>
     </div>
@@ -24,12 +25,18 @@ defmodule UniCanvasWeb.GridLive do
   end
 
   @impl true
-  def handle_event("change_color", %{"row" => row, "col" => col}, socket) do
+  def handle_event("change_color", %{"id" => id}, socket) do
+    target_id = String.to_integer(id)
     updated_color = "#000000"
+    target_cell = UniCanvas.Repo.get(UniCanvas.Cell, target_id)
 
-    updated_cell = %UniCanvas.Cell{row: String.to_integer(row), col: String.to_integer(col), color: updated_color}
-    UniCanvas.Repo.update(updated_cell)
-
-    {:noreply, assign(socket, cells: UniCanvas.Repo.all(UniCanvas.Cell))}
+    case UniCanvas.Cell.update(target_cell, %{color: updated_color}) do
+      {:ok, _updated_cell} ->
+        query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
+        {:noreply, assign(socket, cells: UniCanvas.Repo.all(query))}
+      {:error, changeset} ->
+        IO.inspect(changeset.errors)
+        {:noreply, socket}
+    end
   end
 end
