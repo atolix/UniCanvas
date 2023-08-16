@@ -4,6 +4,9 @@
 
 /* This file is for your main application CSS */
 .grid {
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
   display: grid;
   grid-template-columns: repeat(256, 20px);
 }
