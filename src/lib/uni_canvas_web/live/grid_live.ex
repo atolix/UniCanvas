@@ -4,6 +4,8 @@ defmodule UniCanvasWeb.GridLive do
  
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket), do: UniCanvas.Cell.subscribe()
+
     query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
     {:ok, assign(socket, cells: UniCanvas.Repo.all(query))}
   end
@@ -31,12 +33,17 @@ defmodule UniCanvasWeb.GridLive do
     target_cell = UniCanvas.Repo.get(UniCanvas.Cell, target_id)
 
     case UniCanvas.Cell.update(target_cell, %{color: updated_color}) do
-      {:ok, _updated_cell} ->
+      {:ok, updated_cell} ->
         query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
         {:noreply, assign(socket, cells: UniCanvas.Repo.all(query))}
       {:error, changeset} ->
         IO.inspect(changeset.errors)
         {:noreply, socket}
     end
+  end
+
+  def handle_info({:updated_cell, cell}, socket) do
+    query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
+    {:noreply, assign(socket, cells: UniCanvas.Repo.all(query))}
   end
 end

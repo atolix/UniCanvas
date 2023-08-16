@@ -17,8 +17,7 @@ defmodule UniCanvasWeb.Router do
   scope "/", UniCanvasWeb do
     pipe_through :browser
 
-    live "/grid", GridLive
-    get "/", PageController, :home
+    live "/", GridLive
   end
 
   # Other scopes may use custom stacks.
