@@ -21,3 +21,18 @@
 .cell:hover {
   background-color: #bbb !important;
 }
+
+.color-palette {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: repeat(32, 18px);
+  grid-gap: 5px;
+}
+
+.color {
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
