@@ -7,7 +7,7 @@ defmodule UniCanvasWeb.GridLive do
     if connected?(socket), do: UniCanvas.Cell.subscribe()
 
     query = from(c in UniCanvas.Cell, order_by: [asc: c.id])
-    {:ok, assign(socket, cells: UniCanvas.Repo.all(query))}
+    {:ok, assign(socket, cells: UniCanvas.Repo.all(query), selected_color: "#000000")}
   end
 
   @impl true
